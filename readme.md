@@ -11,3 +11,13 @@ var nswagProjectFile = Path.GetFullPath("../Path/To/projectfile.nswag");
 
 await NswagCodeGenerator.GenerateClientAsync(nswagProjectFile);
 ```
+
+OR
+
+```
+using NswagStudioSettingsForCSharpClientGenerator; 
+
+var nswagProjectFile = Path.GetFullPath("../Path/To/projectfile.nswag", "../OutputDirectory/"); 
+
+await NswagCodeGenerator.GenerateClientAsync(nswagProjectFile);
+```
