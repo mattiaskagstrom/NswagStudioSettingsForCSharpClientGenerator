@@ -7,6 +7,10 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Authors>mattias.kagstrom</Authors>
     <Description>Reads the .swag file from nswag studio and generates the specified c# client from it.</Description>
+    <PackageProjectUrl>https://github.com/mattiaskagstrom/NswagStudioSettingsForCSharpClientGenerator</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/mattiaskagstrom/NswagStudioSettingsForCSharpClientGenerator</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>nswag;openapi;swagger;code generator;</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
