@@ -7,8 +7,53 @@ namespace NswagStudioSettingsForCSharpClientGenerator
 {
     public static class NswagCodeGenerator
     {
-
+        /// <summary>
+        /// Generates the client specified in the supplied nswagFilePath's settings
+        /// </summary>
+        /// <param name="nswagFilePath">Path to a valid .nswag project file</param>
+        /// <returns></returns>
+        /// <exception cref="FileNotFoundException"></exception>
+        /// <exception cref="MissingFieldException"></exception>
         public async static Task GenerateClientAsync(string nswagFilePath)
+        {
+            var (code, className) = GenerateCodeFromNswagFile(nswagFilePath);
+
+            var outputFilename = Path.Combine(Path.GetDirectoryName(nswagFilePath), className + ".cs");
+
+            File.WriteAllText(outputFilename, code);
+        }
+
+        /// <summary>
+        /// Generates the client specified in the supplied nswagFilePath's settings
+        /// </summary>
+        /// <param name="nswagFilePath">Path to a valid .nswag project file</param>
+        /// <param name="outputPath">The path where to save the generated <client>.cs</param>
+        /// <returns></returns>
+        /// <exception cref="FileNotFoundException"></exception>
+        /// <exception cref="MissingFieldException"></exception>
+        public async static Task GenerateClientAsync(string nswagFilePath, string outputPath)
+        {
+
+            var (code, className) = GenerateCodeFromNswagFile(nswagFilePath);
+            var outputFilename = Path.Combine(Path.GetDirectoryName(outputPath), className + ".cs");
+
+            File.WriteAllText(outputFilename, code);
+        }
+        
+        private static (string, string) GenerateCodeFromNswagFile(string nswagFilePath)
+        {
+            OpenApiDocument document = GetSwaggerDocument(nswagFilePath);
+
+            var clientSettings = new CSharpClientGeneratorSettings().FromFile(nswagFilePath);
+
+            var clientGenerator = new CSharpClientGenerator(document, clientSettings);
+
+            var code = clientGenerator.GenerateFile();
+
+            return (code, clientSettings.ClassName);
+        }
+
+        private static OpenApiDocument GetSwaggerDocument(string nswagFilePath)
         {
             string jsonstring = File.ReadAllText(nswagFilePath);
             var swaggerDocument = JsonSerializer.Deserialize<Root>(jsonstring);
@@ -17,17 +62,8 @@ namespace NswagStudioSettingsForCSharpClientGenerator
             {
                 throw new MissingFieldException("Missing url in nswag file");
             }
-            var document = await OpenApiDocument.FromUrlAsync(swaggerDocument.DocumentGenerator.FromDocument.Url);
-
-            var clientSettings = new CSharpClientGeneratorSettings().FromFile(nswagFilePath);
-
-            var clientGenerator = new CSharpClientGenerator(document, clientSettings);
-
-            var code = clientGenerator.GenerateFile();
-
-            var outputFilename = Path.Combine(Path.GetDirectoryName(nswagFilePath), clientSettings.ClassName + ".cs");
-
-            File.WriteAllText(outputFilename, code);
+            var document = OpenApiDocument.FromUrlAsync(swaggerDocument.DocumentGenerator.FromDocument.Url).Result;
+            return document;
         }
 
         private static CSharpClientGeneratorSettings FromFile(this CSharpClientGeneratorSettings _, string filePath)

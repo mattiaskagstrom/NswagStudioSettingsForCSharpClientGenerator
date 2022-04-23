@@ -6,12 +6,20 @@
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Authors>mattias.kagstrom</Authors>
-    <Description>Reads the .swag file from nswag studio and generates the specified c# client from it.</Description>
+    <Description>Reads the .nswag file from nswag studio and generates the specified c# client from it.</Description>
     <PackageProjectUrl>https://github.com/mattiaskagstrom/NswagStudioSettingsForCSharpClientGenerator</PackageProjectUrl>
     <RepositoryUrl>https://github.com/mattiaskagstrom/NswagStudioSettingsForCSharpClientGenerator</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>nswag;openapi;swagger;code generator;</PackageTags>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\readme.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="NSwag.CodeGeneration.CSharp" Version="13.15.10" />
