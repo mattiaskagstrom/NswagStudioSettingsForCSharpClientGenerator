@@ -1,7 +1,10 @@
 ﻿using NJsonSchema.CodeGeneration.CSharp;
 using NSwag;
 using NSwag.CodeGeneration.CSharp;
+using System;
+using System.IO;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace NswagStudioSettingsForCSharpClientGenerator
 {
@@ -39,12 +42,37 @@ namespace NswagStudioSettingsForCSharpClientGenerator
 
             File.WriteAllText(outputFilename, code);
         }
+
+        /// <summary>
+        /// Reads and creates a CSharpClientGeneratorSettings object from a nswag file.
+        /// </summary>
+        /// <param name="nswagFilePath"></param>
+        /// <returns></returns>
+        /// <exception cref="DataMisalignedException"></exception>
+        public static CSharpClientGeneratorSettings CreateSettingsFromFile(string nswagFilePath)
+        {
+            JsonDocument jsondoc = LoadJsonDocument(nswagFilePath);
+            JsonElement openApiToSharpClient = jsondoc.RootElement.GetProperty("codeGenerators").GetProperty("openApiToCSharpClient");
+
+            var jsonOptions = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+            CSharpClientGeneratorSettings generatorSettingsFromJson = JsonSerializer.Deserialize<CSharpClientGeneratorSettings>(openApiToSharpClient.GetRawText(), jsonOptions);
+
+            if (generatorSettingsFromJson == null) throw new DataMisalignedException();
+
+            generatorSettingsFromJson.CSharpGeneratorSettings.JsonLibrary = GetCSHarpJsonLibrary(openApiToSharpClient);
+            generatorSettingsFromJson.CSharpGeneratorSettings.Namespace = openApiToSharpClient.GetProperty("namespace").GetString();
+
+            return generatorSettingsFromJson;
+        }
         
         private static (string, string) GenerateCodeFromNswagFile(string nswagFilePath)
         {
             OpenApiDocument document = GetSwaggerDocument(nswagFilePath);
 
-            var clientSettings = new CSharpClientGeneratorSettings().FromFile(nswagFilePath);
+            var clientSettings = CreateSettingsFromFile(nswagFilePath);
 
             var clientGenerator = new CSharpClientGenerator(document, clientSettings);
 
@@ -66,24 +94,6 @@ namespace NswagStudioSettingsForCSharpClientGenerator
             return document;
         }
 
-        private static CSharpClientGeneratorSettings FromFile(this CSharpClientGeneratorSettings _, string filePath)
-        {
-            JsonDocument jsondoc = LoadJsonDocument(filePath);
-            JsonElement openApiToSharpClient = jsondoc.RootElement.GetProperty("codeGenerators").GetProperty("openApiToCSharpClient");
-
-            var jsonOptions = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
-            };
-            CSharpClientGeneratorSettings? generatorSettingsFromJson = JsonSerializer.Deserialize<CSharpClientGeneratorSettings>(openApiToSharpClient, jsonOptions);
-
-            if (generatorSettingsFromJson == null) throw new DataMisalignedException();
-
-            generatorSettingsFromJson.CSharpGeneratorSettings.JsonLibrary = GetCSHarpJsonLibrary(openApiToSharpClient);
-            generatorSettingsFromJson.CSharpGeneratorSettings.Namespace = openApiToSharpClient.GetProperty("namespace").GetString();
-
-            return generatorSettingsFromJson;
-        }
 
         private static JsonDocument LoadJsonDocument(string filePath)
         {

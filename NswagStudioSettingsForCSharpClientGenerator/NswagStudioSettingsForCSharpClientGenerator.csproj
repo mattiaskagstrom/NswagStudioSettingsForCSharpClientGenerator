@@ -1,9 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Authors>mattias.kagstrom</Authors>
     <Description>Reads the .nswag file from nswag studio and generates the specified c# client from it.</Description>
@@ -12,6 +10,7 @@
     <RepositoryType>git</RepositoryType>
     <PackageTags>nswag;openapi;swagger;code generator;</PackageTags>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
+    <Version>1.2.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
