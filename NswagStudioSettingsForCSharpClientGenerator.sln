@@ -3,12 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NswagStudioSettingsForCSharpClientGenerator", "NswagStudioSettingsForCSharpClientGenerator\NswagStudioSettingsForCSharpClientGenerator.csproj", "{F4046551-FD00-4E11-9227-B6B5736F26B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NswagStudioSettingsForCSharpClientGenerator", "NswagStudioSettingsForCSharpClientGenerator\NswagStudioSettingsForCSharpClientGenerator.csproj", "{F4046551-FD00-4E11-9227-B6B5736F26B6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1154B665-E288-4CEE-B81A-FA2D5DA71DDD}"
 	ProjectSection(SolutionItems) = preProject
 		readme.md = readme.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UsageExample", "UsageExample\UsageExample.csproj", "{5F523FD4-16AF-4582-92CA-FCA5F56CB019}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,6 +22,10 @@ Global
 		{F4046551-FD00-4E11-9227-B6B5736F26B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4046551-FD00-4E11-9227-B6B5736F26B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4046551-FD00-4E11-9227-B6B5736F26B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F523FD4-16AF-4582-92CA-FCA5F56CB019}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F523FD4-16AF-4582-92CA-FCA5F56CB019}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F523FD4-16AF-4582-92CA-FCA5F56CB019}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F523FD4-16AF-4582-92CA-FCA5F56CB019}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
