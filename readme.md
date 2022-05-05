@@ -47,4 +47,4 @@ var settings = CreateSettingsFromFile(nswagFilePath);
 
 var generator = new CSharpClientGenerator(document, settings);	
 var code = generator.GenerateFile();
-``
+```
