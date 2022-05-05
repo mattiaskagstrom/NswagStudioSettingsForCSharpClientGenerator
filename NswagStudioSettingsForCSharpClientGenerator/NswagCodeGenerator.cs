@@ -105,7 +105,7 @@ namespace NswagStudioSettingsForCSharpClientGenerator
 
         private static CSharpJsonLibrary GetCSHarpJsonLibrary(JsonElement openApiToSharpClient)
         {
-            var jsonLibraryString = openApiToSharpClient.GetProperty("namespace").GetString();
+            var jsonLibraryString = openApiToSharpClient.GetProperty("jsonLibrary").GetString();
             if (jsonLibraryString == "SystemTextJson")
             {
                 return CSharpJsonLibrary.SystemTextJson;
